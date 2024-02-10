@@ -16,4 +16,6 @@ router.get("/room", (req, res, next) => {
 // })//man kan GODT så adgang til reqw.session her -- på trods af at req.sesion ikke er importer i denne fil. Men den er i den 
 // //ovenståpende fil. det er ret rart"! --1501
 
+//1801 2024 jheg bruger ikke denne fiul til noget.
+
 export default router;

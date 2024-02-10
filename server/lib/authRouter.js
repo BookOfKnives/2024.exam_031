@@ -23,7 +23,7 @@ passport.use(new JsonStrategy(
   // console.log("1: 030 server auth 1");
    try {
       user = await db.users.findOne({ name: username }); //den kan ikke finde ud af ({ username })
-       console.log("2: 030 server auth user found:", user);
+      //  console.log("2: 030 server auth user found:", user);
       if (!user)  return done(null, false); 
       const isPasswordReal = await bcrypt.compare(password, user.hashedPassword)
       if (!isPasswordReal) {
@@ -35,7 +35,7 @@ passport.use(new JsonStrategy(
           console.log("4: 030 auth error!");
       return done(err)
     }
-  console.log("5: auth 030 user in passport:", user.name)
+  // console.log("5: auth 030 user in passport:", user.name)
   //i rEALLY gotta leanr how to js debug
   //welkl that thwas easy. f5 start, step over ...
   ///user.id = generateRandomUserId();
@@ -88,8 +88,8 @@ router.post("/register", json(), async (req, res) => {
   res.send({data: { success: true, username: req.body.username, email: req.body.email, passwordHash: req.body.passwordHash }})
 }); 
 
-router.post("/newuserregistration", json(), async (req, res) => { //denneher bruges ikke
-  addUser(req.body.name, req.body.email, req.body.passwordHash); //jeg rykker det her op i reouter.post /register
+router.post("/newuserregistration", json(), async (req, res) => { 
+  addUser(req.body.name, req.body.email, req.body.passwordHash); 
   res.send("028 bship server newuserregistration hit!");
 });
 
@@ -99,15 +99,17 @@ router.post('/login/password',
   function(req, res) { 
     // console.log("030 auth js login/password: req.user should be populated by passport:", req.user); //her har vi navn og etc
     // console.log("030 auth js login/password: req.user should be populated by session:", req.session); //her er den tom
-    res.redirect('/');
+    res.redirect('/sessionuserdata'); //prøver med sessionuserdata som er den nye -- //det virker, nu kan jeg logge ind igen.
+    // res.redirect('/'); //original
   }
 );
 
 router.post('/logout', function(req, res, next) {
-  req.logout(function(err) {
+  req.logout(function(err) { //denneher skal også ramme socketen
     if (err) { return next(err); }
     res.redirect('/');
   });
+  
 });
 
 

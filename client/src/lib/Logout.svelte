@@ -1,12 +1,13 @@
 <script>
 import { BASE_URL } from "../stores/settings.js"
-import { username } from "../stores/username.js"
+import { username, userId } from "../stores/username.js"
 //jeg skal have noget der kan sende data til sessionen, ogjeg skala have logout funk
 async function logout() {
     fetch($BASE_URL + "/logout", {
         method: "POST"
     });
-    username.set(null)
+    username.set(undefined);
+    userId.set(undefined);
 };
 
 </script>

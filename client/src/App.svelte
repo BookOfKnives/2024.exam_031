@@ -8,7 +8,7 @@ import Index from "./lib/Index.svelte";
 import Login from "./lib/Login.svelte";
 
 // console.log("028 src app dot env?", process.env);
-
+/*
 async function sendLogin() {
   let usernameAndPassword = { username: inputName, password: inputPassword };
    if (!validateInput(usernameAndPassword)) { 
@@ -78,34 +78,36 @@ async function postData(url, data) {
   console.log("030 bship src app 3: response from fetcH:", json)
   return json;
 }
+*/
 
 onMount(async () => {
-  const response = await fetch($BASE_URL + "/", {
+  // const response = await fetch($BASE_URL + "/sessionuserdata", {
+  //   credentials: "include"
+  // });
+  // const result = await response.json(); //shortern det med .then
+  fetch($BASE_URL + "/sessionuserdata", {
     credentials: "include"
-  });
-  const result = await response.json();
-  try {
-    username.set(result.data.passport.user.username);
-  } catch (err) {
-    console.log("030 client app says, no username")
+  })
+    .then(response => response.json())
+    // .then(response => console.log("030 onmount app svelte response:", response))
+    .then(response => username.set(response.data.passport.user.username))
+    .catch((error) => { 
+    console.log("030 app svelte username error, no username:", error);
+    username.set(undefined);
+    });
+  // try {
+  //   username.set(result.data.passport.user.username);
+  // } catch (err) {
+  //   console.log("030 client app says, no username")
     // console.log("030 client says, my programmer doesnt know what to do with an undefined error")
   }
-});
+// }
+);
 
 
 </script>
 
 <main>
-Login
-<input bind:value={inputName}>
-<input bind:value={inputPassword}>
-<button on:click={sendLogin}>Login</button>
-
-Register
-<input bind:value={inputName}>
-<input bind:value={inputPassword}>
-<input bind:value={inputEmail}>
-<button on:click={sendRegistration}>Register new user </button>
 
 {#if $username}
   <Game />

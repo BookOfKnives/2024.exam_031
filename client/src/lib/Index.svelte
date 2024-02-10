@@ -1,1 +1,1 @@
-<h1>Im an index. You are not logged in.</h1>
+<h1>Welcome to Battleships! Please login or register!</h1>
